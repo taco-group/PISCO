@@ -15,33 +15,38 @@ This repo hosts the official implementation of PISCO: Precise Video Instance Ins
 
 <h4>Instance Insertion</h4>
 
-|  |  |
-| :---: | :---: |
-| <img src="assets/demos/boat_labubu.gif" width="45%"> | <img src="assets/demos/light.gif" width="45%"> |
+| | Example 1 | Example 2 |
+| :---: | :---: | :---: |
+| **Before** | <img src="assets/demos/boat_labubu_origin.gif" width="100%"> | <img src="assets/demos/light_origin.gif" width="100%"> |
+| **After** | <img src="assets/demos/boat_labubu_edited.gif" width="100%"> | <img src="assets/demos/light_edited.gif" width="100%"> |
 
 <h4>Creative</h4>
 
-|  |  |
-| :---: | :---: |
-| <img src="assets/demos/video.gif" width="45%"> | <img src="assets/demos/video1.gif" width="45%"> |
+| | Example 1 | Example 2 |
+| :---: | :---: | :---: |
+| **Before** | <img src="assets/demos/video_origin.gif" width="100%"> | <img src="assets/demos/video1_origin.gif" width="100%"> |
+| **After** | <img src="assets/demos/video_edited.gif" width="100%"> | <img src="assets/demos/video1_edited.gif" width="100%"> |
 
 <h4>Reposition</h4>
 
-| | |
-| :---: | :---: |
-| <img src="assets/demos/bird-12.gif" width="45%"> | <img src="assets/demos/cattle-9.gif" width="45%"> |
+| | Example 1 | Example 2 |
+| :---: | :---: | :---: |
+| **Before** | <img src="assets/demos/bird-12_origin.gif" width="100%"> | <img src="assets/demos/cattle-9_origin.gif" width="100%"> |
+| **After** | <img src="assets/demos/bird-12_edited.gif" width="100%"> | <img src="assets/demos/cattle-9_edited.gif" width="100%"> |
 
 <h4>Resize</h4>
 
-| | |
-| :---: | :---: |
-| <img src="assets/demos/bird-6.gif" width="45%"> | <img src="assets/demos/deer-4.gif" width="45%"> |
+| | Example 1 | Example 2 |
+| :---: | :---: | :---: |
+| **Before** | <img src="assets/demos/bird-6_origin.gif" width="100%"> | <img src="assets/demos/deer-4_origin.gif" width="100%"> |
+| **After** | <img src="assets/demos/bird-6_edited.gif" width="100%"> | <img src="assets/demos/deer-4_edited.gif" width="100%"> |
 
 <h4>Simulation</h4>
 
-| | |
-| :---: | :---: |
-| <img src="assets/demos/b29377e0-83e8340a.gif" width="45%"> | <img src="assets/demos/racing-13.gif" width="45%"> |
+| | Example 1 | Example 2 |
+| :---: | :---: | :---: |
+| **Before** | <img src="assets/demos/b29377e0-83e8340a_origin.gif" width="100%"> | <img src="assets/demos/racing-13_origin.gif" width="100%"> |
+| **After** | <img src="assets/demos/b29377e0-83e8340a_edited.gif" width="100%"> | <img src="assets/demos/racing-13_edited.gif" width="100%"> |
 
 </div>
 
