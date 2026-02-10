@@ -15,7 +15,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"
 from diffsynth.utils.data import save_video, VideoData
 from diffsynth.pipelines.wan_video import WanVideoPipeline, ModelConfig
 from diffsynth.core import load_state_dict
-from inference_img.utils import load_image_sequence, vram_config
+from inference.utils import load_image_sequence, vram_config
 
 
 pipe = WanVideoPipeline.from_pretrained(
