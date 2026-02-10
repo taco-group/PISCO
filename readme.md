@@ -10,6 +10,44 @@ This repo hosts the official implementation of PISCO: Precise Video Instance Ins
 <!-- [![Dataset](https://img.shields.io/badge/HuggingFace-Dataset-orange.svg?style=for-the-badge)](https://github.com/taco-group/PISCO) -->
 
 
+### Video Demos
+<div align="center">
+
+<h4>Instance Insertion</h4>
+
+|  |  |
+| :---: | :---: |
+| <img src="assets/demos/boat_labubu.gif" width="45%"> | <img src="assets/demos/light.gif" width="45%"> |
+
+<h4>Creative</h4>
+
+|  |  |
+| :---: | :---: |
+| <img src="assets/demos/video.gif" width="45%"> | <img src="assets/demos/video1.gif" width="45%"> |
+
+<h4>Reposition</h4>
+
+| | |
+| :---: | :---: |
+| <img src="assets/demos/bird-12.gif" width="45%"> | <img src="assets/demos/cattle-9.gif" width="45%"> |
+
+<h4>Resize</h4>
+
+| | |
+| :---: | :---: |
+| <img src="assets/demos/bird-6.gif" width="45%"> | <img src="assets/demos/deer-4.gif" width="45%"> |
+
+<h4>Simulation</h4>
+
+| | |
+| :---: | :---: |
+| <img src="assets/demos/b29377e0-83e8340a.gif" width="45%"> | <img src="assets/demos/racing-13.gif" width="45%"> |
+
+</div>
+
+<br>
+
+
 ### TODO list
 
 - [x] Release Inference Code
