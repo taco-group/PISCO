@@ -323,6 +323,19 @@ wan_series = [
         "model_class": "diffsynth.models.wan_video_pisco.PISCOWanModel",
         "state_dict_converter": "diffsynth.utils.state_dict_converters.wan_video_pisco.PISCOWanModelDictConverter",
     },
+    {
+        "model_hash": "d442e690d8a0145d68adc8ec22d7b088",
+        "model_name": "wan_video_pisco",
+        "model_class": "diffsynth.models.wan_video_pisco.PISCOWanModel",
+        "state_dict_converter": "diffsynth.utils.state_dict_converters.wan_video_pisco.PISCOWanModelDictConverter",
+    },
+    {
+        "model_hash": "d442e690d8a0145d68adc8ec22d7b088",
+        "model_name": "wan_video_dit",
+        "model_class": "diffsynth.models.wan_video_dit.WanModel",
+        "extra_kwargs": {'has_image_input': False, 'patch_size': [1, 2, 2], 'in_dim': 16, 'dim': 1536, 'ffn_dim': 8960, 'freq_dim': 256, 'text_dim': 4096, 'out_dim': 16, 'num_heads': 12, 'num_layers': 30, 'eps': 1e-06},
+        "state_dict_converter": "diffsynth.utils.state_dict_converters.wan_video_dit.WanVideoDiTStateDictConverter",
+    },
 
 
 
