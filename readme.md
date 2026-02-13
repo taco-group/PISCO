@@ -13,6 +13,8 @@ This repo hosts the official implementation of PISCO: Precise Video Instance Ins
 ### Video Demos
 <div align="center">
 
+<video src="assets/PISCO_demo.mp4" width="100%" controls autoplay loop muted></video>
+
 <h4>Instance Insertion</h4>
 
 | |  |  |
