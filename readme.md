@@ -1,5 +1,7 @@
 # PISCO: Precise Video Instance Insertion with Sparse Control
 
+**Accepted to NeurIPS 2026!**
+
 This repo hosts the official implementation of PISCO: Precise Video Instance Insertion with Sparse Control
 
 [![Paper](https://img.shields.io/badge/arXiv-Paper-b31b1b.svg?style=for-the-badge)](https://arxiv.org/abs/2602.08277)
