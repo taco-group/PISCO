@@ -337,9 +337,21 @@ wan_series = [
         "state_dict_converter": "diffsynth.utils.state_dict_converters.wan_video_dit.WanVideoDiTStateDictConverter",
     },
 
-
-
-
+    # PISCO-14B initialized from Wan2.2-VACE-Fun-A14B (utils/checkpoints_init.py)
+    {
+        "model_hash": "0c17d77bf35dc838a9b7d4c589c4dafd",
+        "model_name": "wan_video_dit",
+        "model_class": "diffsynth.models.wan_video_dit.WanModel",
+        "extra_kwargs": {'has_image_input': False, 'patch_size': [1, 2, 2], 'in_dim': 16, 'dim': 5120, 'ffn_dim': 13824, 'freq_dim': 256, 'text_dim': 4096, 'out_dim': 16, 'num_heads': 40, 'num_layers': 40, 'eps': 1e-06},
+        "state_dict_converter": "diffsynth.utils.state_dict_converters.wan_video_dit.WanVideoDiTStateDictConverter",
+    },
+    {
+        "model_hash": "0c17d77bf35dc838a9b7d4c589c4dafd",
+        "model_name": "wan_video_pisco",
+        "model_class": "diffsynth.models.wan_video_pisco.PISCOWanModel",
+        "extra_kwargs": {'pisco_layers': (0, 5, 10, 15, 20, 25, 30, 35), 'pisco_in_dim': 132, 'patch_size': (1, 2, 2), 'has_image_input': False, 'dim': 5120, 'num_heads': 40, 'ffn_dim': 13824, 'eps': 1e-06},
+        "state_dict_converter": "diffsynth.utils.state_dict_converters.wan_video_pisco.PISCOWanModelDictConverter"
+    },
 ]
 
 flux_series = [

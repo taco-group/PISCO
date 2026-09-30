@@ -12,3 +12,7 @@ accelerate
 peft
 datasets
 wandb
+numpy
+Pillow
+tqdm
+huggingface_hub

@@ -160,7 +160,8 @@ def hash_model_file(path, with_shape=True):
 
 
 if __name__ == "__main__":
-    path = "/mnt/beegfs/xiangbo/Folder/Research/SE/DiffSynth-Studio/models/XG/xgtemp.safetensors"
-    print("xgtemp:", hash_model_file(path))
-    path = "/mnt/beegfs/xiangbo/Folder/Research/SE/DiffSynth-Studio/models/XG/pisco.safetensors"
-    print("pisco:", hash_model_file(path))
+    # Print the model hash used by diffsynth/configs/model_configs.py, e.g.
+    # python -m diffsynth.core.loader.file models/PISCO/inits/PISCO-1.3B/PISCO-1.3B.safetensors
+    import sys
+    for path in sys.argv[1:]:
+        print(f"{path}: {hash_model_file(path)}")

@@ -37,14 +37,9 @@ class ModelConfig:
             return self.origin_file_pattern
         
     def parse_download_source(self):
-        # if self.download_source is None:
-        #     if os.environ.get('DIFFSYNTH_DOWNLOAD_SOURCE') is not None:
-        #         return os.environ.get('DIFFSYNTH_DOWNLOAD_SOURCE')
-        #     else:
-        #         return "modelscope"
-        # else:
-        #     return self.download_source
-        return "huggingface"
+        if self.download_source is not None:
+            return self.download_source
+        return os.environ.get('DIFFSYNTH_DOWNLOAD_SOURCE', "huggingface")
         
     def parse_skip_download(self):
         if self.skip_download is None:
