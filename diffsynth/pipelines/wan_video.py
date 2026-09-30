@@ -128,6 +128,9 @@ class WanVideoPipeline(BasePipeline):
             for model_config in model_configs:
                 if model_config.origin_file_pattern is None or model_config.model_id is None:
                     continue
+                # The converted-safetensors repo only exists on ModelScope; on HuggingFace load the original files.
+                if model_config.parse_download_source().lower() != "modelscope":
+                    continue
                 if model_config.origin_file_pattern in redirect_dict and model_config.model_id != redirect_dict[model_config.origin_file_pattern][0]:
                     print(f"To avoid repeatedly downloading model files, ({model_config.model_id}, {model_config.origin_file_pattern}) is redirected to {redirect_dict[model_config.origin_file_pattern]}. You can use `redirect_common_files=False` to disable file redirection.")
                     model_config.model_id = redirect_dict[model_config.origin_file_pattern][0]
