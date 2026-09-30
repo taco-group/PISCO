@@ -11,6 +11,12 @@ This repo hosts the official implementation of PISCO: Precise Video Instance Ins
 [![Model-1.3B](https://img.shields.io/badge/HuggingFace-1.3B-orange.svg?style=for-the-badge)](https://huggingface.co/xiangbog/PISCO-1.3B/tree/main)
 [![Dataset](https://img.shields.io/badge/HuggingFace-Dataset-orange.svg?style=for-the-badge)](https://huggingface.co/datasets/xiangbog/PISCO-Dataset)
 
+### TODO list
+
+- [x] Release Inference Code
+- [x] Release Development Tools
+- [x] Release Training Code
+- [x] Release Training Set
 
 ### Video Demos
 <div align="center">
@@ -57,12 +63,6 @@ This repo hosts the official implementation of PISCO: Precise Video Instance Ins
 <br>
 
 
-### TODO list
-
-- [x] Release Inference Code
-- [x] Release Development Tools
-- [x] Release Training Code
-- [x] Release Training Set
 
 ### Installation
 
