@@ -1,6 +1,7 @@
 import torch, os, argparse, accelerate, warnings
 import wandb
 import re
+import uuid
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from diffsynth.core import UnifiedDataset, find_recent_checkpoint
@@ -194,7 +195,7 @@ if __name__ == "__main__":
 
 
     slurm_id = os.environ.get("SLURM_JOB_ID") 
-    wandb_id = slurm_id if slurm_id else wandb.util.generate_id()
+    wandb_id = slurm_id if slurm_id else uuid.uuid4().hex[:8]  # wandb.util.generate_id() is gone in recent wandb
     wandb_init_kwargs = {
         "wandb": {
             "id": wandb_id,
