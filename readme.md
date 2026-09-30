@@ -93,63 +93,51 @@ python inference/pretrained/infer_14B_720p.py
 
 ### Training
 
-PISCO is trained progressively on top of VACE (Sec. 4.2 of the paper). The 14B model is a mixture of two denoisers (high-noise / low-noise) that are trained independently with the same schedule; the high-noise expert sees timesteps in `[0, 0.358]` and the low-noise expert `[0.358, 1]`.
+PISCO is trained in three stages on top of VACE at 832×480 with 49 frames (Sec. 4.2 of the paper). The 14B model is a mixture of two denoisers that are trained independently with the same schedule: the high-noise expert on timesteps `[0, 0.358]`, the low-noise expert on `[0.358, 1]`.
 
-| Stage | Paper name | Trainable | LR | Script |
-|---|---|---|---|---|
-| I | Adapter input warm-up | new input projection of the VACE adapter (`pisco.pisco_patch_embedding`) | 1e-4 | `training/stage1/` |
-| II | Adapter finetuning | full context adapter (`pisco`) | 2e-5 | `training/stage2/` |
-| III | Joint finetuning | adapter + DiT backbone (`pisco,dit`) | 1e-5 | `training/stage3/` |
-| IV | Augmented training | + amodal-completion / relighting augmented inputs | — | coming with the training set |
-| V | Resolution & temporal extension | 1280×720, 121 frames | — | coming with the training set |
+| Stage | Trainable | LR | Script |
+|---|---|---|---|
+| I. Adapter input warm-up | new input projection of the VACE adapter (`pisco.pisco_patch_embedding`) | 1e-4 | `training/stage1/` |
+| II. Adapter finetuning | full context adapter (`pisco`) | 2e-5 | `training/stage2/` |
+| III. Joint finetuning | adapter + DiT backbone (`pisco,dit`) | 1e-5 | `training/stage3/` |
 
-Stages I–III run at 832×480 with 49 frames.
+#### 1. Training data
 
-#### 1. Download base weights
-
-```bash
-huggingface-cli download Wan-AI/Wan2.1-T2V-1.3B --local-dir models/Wan-AI/Wan2.1-T2V-1.3B
-# 1.3B
-huggingface-cli download Wan-AI/Wan2.1-VACE-1.3B --local-dir models/Wan-AI/Wan2.1-VACE-1.3B
-# 14B
-huggingface-cli download alibaba-pai/Wan2.2-VACE-Fun-A14B --local-dir models/PAI/Wan2.2-VACE-Fun-A14B
-```
-
-#### 2. Initialize PISCO from VACE
-
-This widens the VACE adapter input projection to the PISCO conditions (background video, instance, mask, depths) and writes `models/PISCO/inits/`.
-
-```bash
-python utils/checkpoints_init.py --model 1.3B       # 1.3B
-python utils/checkpoints_init.py --model 14B-low    # 14B low-noise expert
-python utils/checkpoints_init.py --model 14B-high   # 14B high-noise expert
-```
-
-#### 3. Prepare training data
-
-Each training sample is a tuple of six aligned videos. Organize them per subset as
+The training set contains 20,590 samples: 11,816 synthetic scenes (`Env1`–`Env27`) and 8,774 real videos from VPData (`data_v2`). Every sample is six aligned 832×480 videos of 49 frames:
 
 ```
 dataset/PISCO/
-└── <subset>/                                   # e.g. a source dataset or scene
-    ├── <subset>_Unedited/<name>.mp4            # target video with the instance        -> video
-    ├── <subset>_Edited/<name>.mp4              # background video, instance removed    -> pisco_video
-    ├── <subset>_Masked/<name>.mp4              # spatial mask of the instance          -> pisco_video_mask
-    ├── <subset>_Entity/<name>.mp4              # segmented instance clip               -> pisco_reference_video
-    ├── <subset>_Edited_Depth/<name>_viz.mp4    # depth of the background video         -> pisco_depth
-    └── <subset>_Depth_Entity/<name>_viz.mp4    # depth of the segmented instance       -> pisco_reference_depth
+├── PISCO.json                                  # training index
+└── <subset>/                                   # Env1 ... Env27, data_v2
+    ├── <subset>_Unedited/<name>.mp4            # target video with the instance      -> video
+    ├── <subset>_Edited/<name>.mp4              # background video, instance removed  -> pisco_video
+    ├── <subset>_Masked/<name>.mp4              # spatial mask of the instance        -> pisco_video_mask
+    ├── <subset>_Entity/<name>.mp4              # segmented instance                  -> pisco_reference_video
+    ├── <subset>_Edited_Depth/<name>_viz.mp4    # depth of the background video       -> pisco_depth
+    └── <subset>_Depth_Entity/<name>_viz.mp4    # depth of the segmented instance     -> pisco_reference_depth
 ```
 
-then build the index `dataset/PISCO/PISCO.json` (every folder containing `<subset>_Unedited/` is picked up):
+Download it to `dataset/PISCO` (link coming soon). To train on your own data, arrange it the same way and build the index with
 
 ```bash
-python utils/data_utils/generate_data_json.py --dataset_folder dataset --dataset_name PISCO --output_filename PISCO.json
-# optional: cap or repeat subsets, e.g. --limit "Env*=60" data_v2=3000 --repeat DAVIS=5
+python utils/data_utils/generate_data_json.py --dataset_dir dataset/PISCO
 ```
 
-Videos must have at least `--num_frames` frames (49 for stages I–III). During training the instance/depth conditions are sparsified at random keyframes, so the same tuples serve single-keyframe, first/last-frame and dense control.
+During training the instance and depth conditions are kept only at randomly sampled keyframes, so the same samples cover single-keyframe, first/last-frame and dense control.
 
-#### 4. Train
+#### 2. Download base weights and initialize PISCO from VACE
+
+```bash
+huggingface-cli download Wan-AI/Wan2.1-T2V-1.3B --local-dir models/Wan-AI/Wan2.1-T2V-1.3B
+huggingface-cli download Wan-AI/Wan2.1-VACE-1.3B --local-dir models/Wan-AI/Wan2.1-VACE-1.3B                # 1.3B
+huggingface-cli download alibaba-pai/Wan2.2-VACE-Fun-A14B --local-dir models/PAI/Wan2.2-VACE-Fun-A14B      # 14B
+
+python utils/checkpoints_init.py --model 1.3B       # writes models/PISCO/inits/
+python utils/checkpoints_init.py --model 14B-low
+python utils/checkpoints_init.py --model 14B-high
+```
+
+#### 3. Train
 
 Logging uses Weights & Biases: set `WANDB_API_KEY`, or `WANDB_MODE=offline`.
 
@@ -176,9 +164,9 @@ bash training/stage3/PISCO-14B-low-noise.sh
 bash training/stage3/PISCO-14B-high-noise.sh
 ```
 
-> Each stage resumes from the checkpoint found in its own output folder (`--auto_load_checkpoints`). Do not skip `copy_to_next_stage.py`: without it the next stage silently starts again from the VACE initialization.
+> Each stage resumes from the checkpoint in its own output folder (`--auto_load_checkpoints`). Do not skip `copy_to_next_stage.py`: without it the next stage silently starts again from the VACE initialization.
 
-Intermediate checkpoints can be previewed with `python inference/stage{1,2,3}/infer_1.3B.py [--step N]` (and `infer_14B.py`).
+Preview intermediate checkpoints with `python inference/stage{1,2,3}/infer_1.3B.py [--step N]` (or `infer_14B.py`).
 
 ### Fine-tuning from PISCO
 
