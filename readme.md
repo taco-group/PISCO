@@ -9,7 +9,7 @@ This repo hosts the official implementation of PISCO: Precise Video Instance Ins
 [![Development Tools](https://img.shields.io/badge/GitHub-Development_Tools-2ea44f.svg?style=for-the-badge)](https://github.com/XiangboGaoBarry/PISCO-Development-Tools)
 [![Model-14B](https://img.shields.io/badge/HuggingFace-14B-orange.svg?style=for-the-badge)](https://huggingface.co/xiangbog/PISCO-14B/tree/main)
 [![Model-1.3B](https://img.shields.io/badge/HuggingFace-1.3B-orange.svg?style=for-the-badge)](https://huggingface.co/xiangbog/PISCO-1.3B/tree/main)
-<!-- [![Dataset](https://img.shields.io/badge/HuggingFace-Dataset-orange.svg?style=for-the-badge)](https://github.com/taco-group/PISCO) -->
+[![Dataset](https://img.shields.io/badge/HuggingFace-Dataset-orange.svg?style=for-the-badge)](https://huggingface.co/datasets/xiangbog/PISCO-Dataset)
 
 
 ### Video Demos
@@ -62,7 +62,7 @@ This repo hosts the official implementation of PISCO: Precise Video Instance Ins
 - [x] Release Inference Code
 - [x] Release Development Tools
 - [x] Release Training Code
-- [ ] Release Training Set
+- [x] Release Training Set
 
 ### Installation
 
@@ -117,7 +117,16 @@ dataset/PISCO/
     └── <subset>_Depth_Entity/<name>_viz.mp4    # depth of the segmented instance     -> pisco_reference_depth
 ```
 
-Download it to `dataset/PISCO` (link coming soon). To train on your own data, arrange it the same way and build the index with
+Download it from [HuggingFace](https://huggingface.co/datasets/xiangbog/PISCO-Dataset) (36.6 GB of tar shards) and unpack it to `dataset/PISCO`:
+
+```bash
+huggingface-cli download xiangbog/PISCO-Dataset --repo-type dataset --local-dir PISCO-Dataset
+mkdir -p dataset/PISCO
+for f in PISCO-Dataset/shards/*.tar; do tar -xf "$f" -C dataset/PISCO; done
+cp PISCO-Dataset/PISCO.json dataset/PISCO/
+```
+
+To train on your own data, arrange it the same way and build the index with
 
 ```bash
 python utils/data_utils/generate_data_json.py --dataset_dir dataset/PISCO
@@ -178,9 +187,6 @@ python utils/generate_dataset_json.py --dataset_dir Dataset/data --repeat 10
 CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6 bash training/finetune/PISCO-1.3B.sh   # or PISCO-14B.sh (DeepSpeed ZeRO-2)
 ```
 
-### Known Issues
-
-- DeepSpeed `cpu_adam` fails to compile against PyTorch 2.6.0 headers. Use ZeRO-2 without CPU offload (`offload_optimizer_device: none`, as in `training/accelerate_config_14B_7gpu.yaml`); 80GB H100s are sufficient for 14B training.
 
 
 [![Star History Chart](https://api.star-history.com/svg?repos=taco-group/PISCO&type=Date)](https://star-history.com/#taco-group/PISCO&Date)
