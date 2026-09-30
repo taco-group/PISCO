@@ -11,6 +11,12 @@ This repo hosts the official implementation of PISCO: Precise Video Instance Ins
 [![Model-1.3B](https://img.shields.io/badge/HuggingFace-1.3B-orange.svg?style=for-the-badge)](https://huggingface.co/xiangbog/PISCO-1.3B/tree/main)
 [![Dataset](https://img.shields.io/badge/HuggingFace-Dataset-orange.svg?style=for-the-badge)](https://huggingface.co/datasets/xiangbog/PISCO-Dataset)
 
+### News
+
+- **[2026-09-30]** Training set released on [HuggingFace](https://huggingface.co/datasets/xiangbog/PISCO-Dataset).
+- **[2026-09-30]** Training code released. See [Training](#training).
+- **[2026-09-24]** PISCO is accepted to NeurIPS 2026! 🎉
+
 ### TODO list
 
 - [x] Release Inference Code
